@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF333333</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="bege_200">#FDD4A7</color>
+    <color name="bege_500">#E6AE71</color>
+    <color name="bege_700">#E3A663</color>
+    <color name="bege_100">#FFEAD4</color>
+    <color name="bege_trans">#40FDD4A7</color>
+</resources>
