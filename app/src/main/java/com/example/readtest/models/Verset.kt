@@ -1,4 +1,4 @@
-package com.example.readtest
+package com.example.readtest.models
 
 data class Verset(
     val id : Int = 0,

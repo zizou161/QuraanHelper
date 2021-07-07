@@ -1,11 +1,14 @@
-package com.example.readtest
+package com.example.readtest.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.readtest.adapters.AyatAdapter
+import com.example.readtest.viewmodel.AyatViewModel
+import com.example.readtest.R
+import com.example.readtest.models.Verset
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.ss.usermodel.WorkbookFactory
 

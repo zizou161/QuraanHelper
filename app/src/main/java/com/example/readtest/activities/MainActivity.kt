@@ -1,14 +1,18 @@
-package com.example.readtest
+package com.example.readtest.activities
 
 import android.Manifest
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
+import com.example.readtest.adapters.JoudhourAdapter
+import com.example.readtest.R
+import com.example.readtest.room.HistoryDataBase
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.ss.usermodel.WorkbookFactory
 
@@ -26,15 +30,37 @@ class MainActivity : AppCompatActivity() {
         var xlWb = WorkbookFactory.create(inputStream)
 
         val joudhourList : ArrayList<String> = getJoudhourList(xlWb)
-        initJoudhourRecyclerView(joudhourList)
+        joudhourList.removeAt(0)
+
+        val dbInstance = Room.databaseBuilder(applicationContext
+            ,HistoryDataBase::class.java
+            ,"quran_db")
+            .allowMainThreadQueries()
+            .build()
+
+        initJoudhourRecyclerView(joudhourList,dbInstance)
     }
 
-    private fun initJoudhourRecyclerView(joudhourList : ArrayList<String>) {
+    private fun initJoudhourRecyclerView(joudhourList : ArrayList<String>,db: HistoryDataBase) {
         val recyclerView = findViewById<RecyclerView>(R.id.jidhr_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(applicationContext,VERTICAL,false)
         recyclerView.setHasFixedSize(false)
-        jidhrAdapter = JoudhourAdapter(joudhourList)
+        jidhrAdapter = JoudhourAdapter(joudhourList,db)
         recyclerView.adapter = jidhrAdapter
+
+        val searchView = findViewById<SearchView>(R.id.jidhr_search)
+
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                jidhrAdapter.filter.filter(newText)
+                return false
+            }
+
+        })
     }
 
     private fun getJoudhourList(xlWb: Workbook): ArrayList<String> {

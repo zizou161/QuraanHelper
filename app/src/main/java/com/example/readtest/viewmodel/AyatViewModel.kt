@@ -1,9 +1,10 @@
-package com.example.readtest
+package com.example.readtest.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.example.readtest.models.AyahIdentifier
+import com.example.readtest.models.Verset
 import org.apache.poi.ss.usermodel.Workbook
-import kotlin.math.roundToInt
 
 
 class AyatViewModel:ViewModel() {
